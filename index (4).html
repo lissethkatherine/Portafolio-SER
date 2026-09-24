@@ -1,0 +1,564 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Katherine Zapata | Backend Developer Junior</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d0daef",
+                        "secondary-container": "#fec1d6",
+                        "on-background": "#121c2a",
+                        "secondary": "#805062",
+                        "outline": "#8d7075",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#827077",
+                        "on-surface-variant": "#594045",
+                        "on-error": "#ffffff",
+                        "tertiary": "#69575e",
+                        "outline-variant": "#e1bec4",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#ffd9e4",
+                        "inverse-primary": "#ffb1c2",
+                        "surface-variant": "#d9e3f7",
+                        "on-tertiary-container": "#fffbff",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#dee9fd",
+                        "primary-fixed-dim": "#ffb1c2",
+                        "primary": "#b50a53",
+                        "tertiary-fixed-dim": "#d7c1c8",
+                        "on-secondary-fixed": "#330f1f",
+                        "surface-tint": "#b80f55",
+                        "surface": "#f9f9ff",
+                        "inverse-on-surface": "#ebf1ff",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed-variant": "#8f003f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#fffbff",
+                        "primary-container": "#d72f6b",
+                        "on-tertiary-fixed-variant": "#524249",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-highest": "#d9e3f7",
+                        "secondary-fixed-dim": "#f2b6cb",
+                        "on-tertiary-fixed": "#25181e",
+                        "inverse-surface": "#273140",
+                        "on-secondary-container": "#7b4c5e",
+                        "background": "#f9f9ff",
+                        "on-surface": "#121c2a",
+                        "primary-fixed": "#ffd9df",
+                        "on-primary-fixed": "#3f0018",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#f4dce4",
+                        "on-secondary-fixed-variant": "#65394b",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#eff3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "xl": "80px",
+                        "sm": "12px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Poppins"],
+                        "body-lg": ["Poppins"],
+                        "display": ["Poppins"],
+                        "label-md": ["Poppins"],
+                        "headline-lg": ["Poppins"],
+                        "display-mobile": ["Poppins"],
+                        "headline-md": ["Poppins"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #b50a53 0%, #ec407a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body class="bg-surface font-body-md text-on-surface overflow-x-hidden selection:bg-secondary-container selection:text-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-inverse-surface/70 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<span class="font-display text-headline-md font-bold text-primary">BackendDev</span>
+<div class="hidden md:flex gap-md items-center">
+<a class="font-label-md text-label-md uppercase tracking-wider text-primary relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#hero">Home</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#about">About</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#tech">Tech</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#services">Servicios</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#projects">Projects</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#training">Training</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#contact">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all scale-95 active:scale-90">Hire Me</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-xl px-gutter overflow-hidden bg-gradient-to-br from-[#fff0f6] to-surface" id="hero">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center relative z-10">
+<div class="space-y-md">
+<div class="inline-flex items-center gap-xs bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full">
+<span class="material-symbols-outlined text-[18px]">waving_hand</span>
+<span class="font-label-md text-label-md uppercase">¡Hola Mundo!</span>
+</div>
+<h1 class="font-display text-display-mobile md:text-display text-on-background">
+                    Katherine <span class="text-gradient">Zapata</span>
+</h1>
+<h2 class="font-headline-md text-headline-md text-secondary">
+                    Backend Developer Junior | Java & Spring Boot
+                </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Desarrolladora enfocada en backend, con especial interés en Java, Spring Boot y bases de datos. Creo soluciones claras, mantenibles y orientadas a resolver problemas reales.
+                </p>
+
+<!--  -->
+<p class="text-on-surface-variant text-label-md uppercase tracking-wider pt-sm">Disponible para oportunidades como desarrolladora backend junior, proyectos de software y equipos donde pueda aportar, aprender y seguir creciendo profesionalmente.</p>
+</div>
+<div class="relative group transition-all duration-700 opacity-100 translate-y-0">
+<div class="absolute -inset-4 bg-primary/10 rounded-[48px] blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
+<div class="relative glass-card rounded-[48px] p-md shadow-2xl border border-white/50">
+<img class="w-full max-w-xs mx-auto h-auto rounded-[32px] object-cover aspect-square shadow-inner" alt="Katherine Zapata - Backend Developer" src="https://lh3.googleusercontent.com/d/1vUvHMqEwkrdrfHK8sVuQBCeeWHhLylVt">
+</div>
+</div>
+</div>
+</header>
+<!-- About Me Section -->
+<section class="py-xl px-gutter bg-surface transition-all duration-700 opacity-100 translate-y-0" id="about">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+<div class="order-2 lg:order-1">
+<img alt="Katherine Zapata" class="w-full h-auto max-w-md mx-auto lg:mx-0 rounded-[48px] shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVliQi13zUBSHEi1nSSXcyqWWj9aGk5A9pENaxZdR1rOoLUlluAYx0r3a5QQ7sam_CQuiFJ7WxK92UrNBUpQp_fE8u1W7l90xYQQzdHSCZF5zhEYCVE3YQmvu-qc-R4dSOzHSe7Dp5mOW-ar9NSO6zjZJAy8qzmqFGgTWhg04QQhISAZ_NbJO-1NAHZI1BCPnPFw_mSmBxy5UGCSaI6kOb_4tkMLJUUkd5N84XWLwyVf-u0lDEho8fpqH0jpL9mpCaB0YR6XxMC3Y">
+</div>
+<div class="order-1 lg:order-2 space-y-md">
+<h3 class="font-display text-headline-lg text-on-background inline-block border-b-4 border-primary/20 pb-xs">Sobre Mí</h3>
+<div class="space-y-md font-body-md text-body-md text-on-surface-variant">
+<p class="">
+                        ¡Hola! Soy Katherine, <strong>Backend Developer Junior</strong>. Mi enfoque está en el desarrollo backend, donde me interesa construir APIs, trabajar con bases de datos y entender cómo funcionan los sistemas desde su núcleo.
+                    </p>
+<p class="">
+                        Trabajo principalmente con <strong>Java</strong> y <strong>Spring Boot</strong>, junto con bases de datos relacionales como <strong>MySQL</strong> y <strong>PostgreSQL</strong>. También manejo Git, GitHub, HTML, CSS y JavaScript para complementar el desarrollo de soluciones web.
+                    </p>
+<p class="">
+                        Me caracterizo por la curiosidad, la disciplina y el enfoque en resolver problemas. Busco escribir código limpio, aprender buenas prácticas y convertir necesidades concretas en soluciones digitales funcionales.
+                    </p>
+</div>
+<div class="grid grid-cols-2 gap-md pt-base">
+<div class="p-md bg-surface-container rounded-xl">
+<span class="block text-primary font-bold text-headline-md">100%</span>
+<span class="text-label-md uppercase opacity-70">Compromiso</span>
+</div>
+<div class="p-md bg-surface-container rounded-xl">
+<span class="block text-primary font-bold text-headline-md">Learning</span>
+<span class="text-label-md uppercase opacity-70">Focus</span>
+</div>
+</div>
+</div>
+</div>
+<!--  -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mt-xl">
+<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-primary text-[32px]">flag</span>
+<h4 class="font-headline-md text-on-background mt-sm">Misión</h4>
+<p class="text-on-surface-variant mt-xs text-body-md">Construyo soluciones backend que convierten necesidades reales en sistemas funcionales, organizados y mantenibles.</p>
+</div>
+<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-primary text-[32px]">visibility</span>
+<h4 class="font-headline-md text-on-background mt-sm">Visión</h4>
+<p class="text-on-surface-variant mt-xs text-body-md">Consolidarme como desarrolladora backend, profundizar en arquitectura de software, APIs, bases de datos y despliegue de aplicaciones, y participar en proyectos de mayor impacto.</p>
+</div>
+<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
+<span class="material-symbols-outlined text-primary text-[32px]">favorite</span>
+<h4 class="font-headline-md text-on-background mt-sm">Valores</h4>
+<p class="text-on-surface-variant mt-xs text-body-md">Responsabilidad, aprendizaje continuo y trabajo en equipo.</p>
+</div>
+</div>
+</section>
+<!-- Technologies Section -->
+<section class="py-xl px-gutter bg-surface-container-low transition-all duration-700 opacity-100 translate-y-0" id="tech">
+  <div class="max-w-container-max mx-auto text-center mb-xl">
+    <h3 class="font-display text-headline-lg text-on-background mb-base">Mi Stack Tecnológico</h3>
+    <p class="text-on-surface-variant max-w-2xl mx-auto">Tecnologías y herramientas que utilizo para desarrollar soluciones backend y aplicaciones web.</p>
+  </div>
+
+  <div class="max-w-container-max mx-auto space-y-xl">
+    <div>
+      <h4 class="font-headline-md text-on-background mb-md">Lenguajes de Programación & Backend</h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">coffee</span><h4 class="font-headline-md text-body-lg mt-sm">Java</h4><p class="text-label-md text-on-surface-variant uppercase">Lenguaje Core</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">bolt</span><h4 class="font-headline-md text-body-lg mt-sm">Spring Boot</h4><p class="text-label-md text-on-surface-variant uppercase">Framework</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm">PostgreSQL</h4><p class="text-label-md text-on-surface-variant uppercase">Base de Datos</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm">MySQL</h4><p class="text-label-md text-on-surface-variant uppercase">Base de Datos</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">JavaScript</h4><p class="text-label-md text-on-surface-variant uppercase">ES6+</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">Python</h4><p class="text-label-md text-on-surface-variant uppercase">Lenguaje</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm">n8n</h4><p class="text-label-md text-on-surface-variant uppercase">Automatización</p></div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-headline-md text-on-background mb-md">Desarrollo Web & Frontend</h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">html</span><h4 class="font-headline-md text-body-lg mt-sm">HTML5</h4><p class="text-label-md text-on-surface-variant uppercase">Web</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">css</span><h4 class="font-headline-md text-body-lg mt-sm">CSS3</h4><p class="text-label-md text-on-surface-variant uppercase">Web</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm">Git</h4><p class="text-label-md text-on-surface-variant uppercase">Control de Versiones</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">GitHub</h4><p class="text-label-md text-on-surface-variant uppercase">Repositorios</p></div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-headline-md text-on-background mb-md">Cloud, DevOps & Hosting</h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">view_in_ar</span><h4 class="font-headline-md text-body-lg mt-sm">Docker</h4><p class="text-label-md text-on-surface-variant uppercase">Contenedores</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">terminal</span><h4 class="font-headline-md text-body-lg mt-sm">Linux</h4><p class="text-label-md text-on-surface-variant uppercase">Sistema Operativo</p></div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-headline-md text-on-background mb-md">Entornos & Herramientas</h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">Visual Studio Code</h4><p class="text-label-md text-on-surface-variant uppercase">Editor</p></div>
+        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">auto_awesome</span><h4 class="font-headline-md text-body-lg mt-sm">IA</h4><p class="text-label-md text-on-surface-variant uppercase">Herramientas de IA</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Services Section -->
+<!--  -->
+<section class="py-xl px-gutter bg-surface-container-low transition-all duration-700 opacity-100 translate-y-0" id="services">
+<div class="max-w-container-max mx-auto text-center mb-xl">
+<h3 class="font-display text-headline-lg text-on-background mb-base">Servicios de Desarrollo Backend</h3>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Desarrollo soluciones enfocadas en backend, APIs, datos y automatización de procesos.</p>
+</div>
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">dns</span>
+<h4 class="font-headline-md text-body-lg mb-xs">Desarrollo de APIs REST</h4>
+<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+</div>
+<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">integration_instructions</span>
+<h4 class="font-headline-md text-body-lg mb-xs">Bases de Datos</h4>
+<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+</div>
+<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
+<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">support_agent</span>
+<h4 class="font-headline-md text-body-lg mb-xs">Integración y Automatización</h4>
+<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="projects">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-end gap-md mb-xl">
+<div class="max-w-xl">
+<h3 class="font-display text-headline-lg text-on-background mb-base">Proyectos Destacados</h3>
+<p class="text-on-surface-variant">Una muestra de proyectos de desarrollo web y backend que reflejan mi forma de resolver problemas y construir soluciones.</p>
+</div>
+<img alt="Terminal Icon" class="w-24 h-24 hidden md:block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmAIMauUgmESPo0t33FPkg9nx4fUqR3VIG2kax_ydKlevcRWpUx8fNuO4tWk3F8P4JUlzTwdfz5RvYZLpyiSo5o9_Pch6zL0cDyaPJaztWIqnxbs4DhorhoFP8dCHbE_V39aLSv2gFFmvBWCkkobK2sW59r9oHHnzpM13NYf12pf4zXfsqNnbpM8fWkChAkDXk3pTjeU4My9z59ZMmfpkYxhPzc_AhL3yuIb-o38kqa7Is7fZuFxc7Q-MI-dy5oilmV-OHSAN1RaI">
+</div>
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Project Card 1 -->
+<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A minimalist and high-end representation of a digital library management system. The interface is clean, showing stylized book icons and search bars in a soft pink and white color scheme. The aesthetic is modern and organized, reflecting software architecture excellence for a backend portfolio." src="https://images.unsplash.com/photo-1547822424-0a6db5e8f500?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2l1ZGFkJTIwcm9zYXxlbnwwfHwwfHx8MA%3D%3D">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<span class="text-white font-label-md uppercase tracking-wider">n8n • IA</span>
+</div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<h4 class="font-headline-md text-on-background mb-sm">SmartCity-Fix</h4>
+<p class="text-body-md text-on-surface-variant mb-md flex-1">
+                        Plataforma inteligente para que los ciudadanos reporten daños urbanos y consulten el estado de sus tickets en tiempo real.
+                    </p>
+<!--  -->
+<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<div class="flex gap-sm">
+<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/Proyecto_Smartcityfix_D2.git">GitHub</a>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A stylized 3D icon of a dumbbell and a digital heart rate monitor integrated into a clean, pink-toned dashboard. This represents a gym management system UI, focused on cleanliness, professional structure, and high-quality digital design for a backend development student portfolio." src="https://thumbs.dreamstime.com/b/reproductor-de-vinilo-rosa-pastel-con-lp-359346127.jpg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<span class="text-white font-label-md uppercase tracking-wider">HTML • CSS</span>
+</div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<h4 class="font-headline-md text-on-background mb-sm"> MusicStream </h4>
+<p class="text-body-md text-on-surface-variant mb-md flex-1">
+                        Maquetación de una tienda de música y reproductor web hecho con HTML y CSS. Es solo la estructura visual de la página, sin funcionalidad real.
+                    </p>
+<!--  -->
+<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<div class="flex gap-sm">
+<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/MusicStream_App.git">GitHub</a>
+</div>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A premium glassmorphism card layout showing task management components, progress bars, and team collaboration avatars. Soft pink accents, elegant typography, and a professional workspace vibe, representing a project management system for a software developer portfolio." src="https://st5.depositphotos.com/12439124/76031/i/450/depositphotos_760316376-stock-photo-desk-calendar-october-2025-pink.jpg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<span class="text-white font-label-md uppercase tracking-wider">HTML • CSS</span>
+</div>
+</div>
+<div class="p-md flex-1 flex flex-col">
+<h4 class="font-headline-md text-on-background mb-sm">Mi Calendario de Ahorros Inteligente</h4>
+<p class="text-body-md text-on-surface-variant mb-md flex-1">
+                        Diseño de un calendario de ahorro digital, virtual y editable que refleje una meta financiera personal a un año.
+                    </p>
+<!--  -->
+<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<div class="flex gap-sm">
+<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/Mi-Calendario-de-Ahorros-Inteligente.git" target="_blank">GitHub</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Training Section -->
+<section class="py-xl px-gutter bg-white transition-all duration-700 opacity-100 translate-y-0" id="training">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-xl">
+    <div class="lg:col-span-4">
+      <h3 class="font-display text-headline-lg text-on-background mb-md">Formación</h3>
+      <p class="text-on-surface-variant">Formación académica y técnica que respalda mi perfil como desarrolladora junior.</p>
+      <div class="mt-lg p-md border-l-4 border-primary bg-surface-container-low rounded-r-xl">
+        <p class="font-label-md text-primary uppercase">Perfil Profesional</p>
+        <p class="font-body-md">Desarrolladora Junior Full Stack</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-8 space-y-md">
+      <div class="relative pl-md border-l-2 border-outline-variant/50 pb-md">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-primary"></div>
+        <div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10">
+          <span class="text-primary font-bold text-label-md">Formación académica</span>
+          <h4 class="font-headline-md text-on-background mt-xs">Bachiller</h4>
+          <p class="text-on-surface-variant mt-sm">Formación media</p>
+        </div>
+      </div>
+
+      <div class="relative pl-md border-l-2 border-outline-variant/50">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-primary"></div>
+        <div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10">
+          <span class="text-primary font-bold text-label-md">Formación técnica</span>
+          <h4 class="font-headline-md text-on-background mt-xs">Técnico en Desarrollo de Software</h4>
+          <p class="text-on-surface-variant mt-sm">Campuslands · Floridablanca</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Contact Section -->
+<section class="py-xl px-gutter bg-surface-container-highest transition-all duration-700 opacity-100 translate-y-0" id="contact">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl">
+<div class="space-y-md">
+<h3 class="font-display text-headline-lg text-on-background">¿Trabajamos Juntos? :)</h3>
+<p class="text-on-surface-variant body-lg">Estoy disponible para oportunidades como desarrolladora backend junior, proyectos freelance y colaboración en soluciones de software.</p>
+<div class="space-y-sm pt-md">
+<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary">mail</span>
+<div>
+<p class="text-label-md uppercase opacity-50">Email</p>
+<p class="font-body-md">katherinecano020@gmail.com</p>
+</div>
+</div>
+<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary">link</span>
+<div>
+<p class="text-label-md uppercase opacity-50">LinkedIn</p>
+<p class="font-body-md">http://www.linkedin.com/in/lissethkatherine</p>
+</div>
+</div>
+<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
+<span class="material-symbols-outlined text-primary">code</span>
+<div>
+<p class="text-label-md uppercase opacity-50">GitHub</p>
+<p class="font-body-md">https://github.com/lissethkatherine</p>
+</div>
+</div>
+</div>
+<div class="pt-md">
+<!--  -->
+<a class="inline-flex items-center gap-xs bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all" href="#" download="">
+<span class="material-symbols-outlined text-[18px]">download</span> Descargar CV
+                    </a>
+</div>
+</div>
+<div class="glass-card rounded-[32px] p-lg shadow-xl border border-white/50">
+<form id="contact-form" class="space-y-md">
+<div>
+<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Nombre Completo</label>
+<input class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="Tu nombre..." type="text" name="name">
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Correo Electrónico</label>
+<input class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="correo@ejemplo.com" type="email" name="email">
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Mensaje</label>
+<textarea class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="Cuéntame sobre tu proyecto..." rows="4" name="message"></textarea>
+</div>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-label-md uppercase tracking-widest hover:bg-primary-container transition-all" type="submit">Enviar Mensaje</button>
+</form>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-lg bg-surface dark:bg-on-background border-t border-outline-variant/30">
+<div class="flex flex-col items-center gap-base max-w-container-max mx-auto">
+<span class="font-display text-headline-sm text-primary">BackendDev</span>
+<div class="flex gap-md mb-md">
+<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined">code</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined">terminal</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<span class="material-symbols-outlined">mail</span>
+</a>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-center px-gutter opacity-80">
+                © 2026 Backend Portfolio. Crafted with code, precision and pink pixels.
+            </p>
+</div>
+</footer>
+<script>
+        // Smooth reveal on scroll for glass effects and cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, .group').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+
+        // Navigation active state logic
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section, header');
+            const navLinks = document.querySelectorAll('nav a');
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-primary');
+                link.classList.add('text-on-surface-variant');
+                const href = link.getAttribute('href').substring(1);
+                if (href === current) {
+                    link.classList.add('text-primary');
+                    link.classList.remove('text-on-surface-variant');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+<script>
+(function () {
+  emailjs.init({
+    publicKey: "S2Q40Bz_D_OCSQ5BK"
+  });
+
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button ? button.textContent : "Enviar Mensaje";
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Enviando...";
+    }
+
+    emailjs.sendForm(
+      "service_p0jq0vu",
+      "template_iq47c1s",
+      form
+    ).then(
+      function () {
+        alert("¡Mensaje enviado correctamente!");
+        form.reset();
+      },
+      function (error) {
+        console.error("EmailJS:", error.status, error.text);
+        alert("No se pudo enviar el mensaje. Abre la consola del navegador para ver el error de EmailJS.");
+      }
+    ).finally(function () {
+      if (button) {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    });
+  });
+})();
+</script>
+
+</body></html>
