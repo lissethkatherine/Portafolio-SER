@@ -112,48 +112,85 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        html, body { background: #120a18; }
+        #bg-scene {
+            position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+            background: linear-gradient(160deg, #1b0f26 0%, #2a1030 40%, #1a1030 70%, #12081f 100%);
+        }
+        #bg-scene::before {
+            content: ''; position: absolute; inset: 0; opacity: .35;
+            background-image: radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
+            background-size: 26px 26px;
+        }
+        .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; will-change: transform; }
+        .blob-1 { width: 520px; height: 520px; top: -120px; left: -100px; background: radial-gradient(circle, #ff2d78, transparent 70%); animation: floatA 16s ease-in-out infinite; }
+        .blob-2 { width: 460px; height: 460px; top: 20%; right: -140px; background: radial-gradient(circle, #7c3aed, transparent 70%); animation: floatB 20s ease-in-out infinite; }
+        .blob-3 { width: 400px; height: 400px; bottom: -100px; left: 20%; background: radial-gradient(circle, #22d3ee, transparent 70%); animation: floatC 18s ease-in-out infinite; }
+        .blob-4 { width: 340px; height: 340px; bottom: 10%; right: 10%; background: radial-gradient(circle, #fbbf24, transparent 70%); animation: floatA 22s ease-in-out infinite reverse; }
+        @keyframes floatA { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(60px,80px) scale(1.15);} }
+        @keyframes floatB { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-70px,60px) scale(1.1);} }
+        @keyframes floatC { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(50px,-70px) scale(1.2);} }
+        #cursor-glow {
+            position: fixed; z-index: 1; width: 420px; height: 420px; border-radius: 50%; pointer-events: none;
+            background: radial-gradient(circle, rgba(255,45,120,.18), transparent 70%);
+            transform: translate(-50%,-50%); left: 0; top: 0; transition: opacity .3s; mix-blend-mode: screen;
+        }
+        #scroll-progress { position: fixed; top: 0; left: 0; height: 4px; width: 0%; z-index: 100;
+            background: linear-gradient(90deg,#ff2d78,#7c3aed,#22d3ee); box-shadow: 0 0 12px rgba(255,45,120,.6); transition: width .1s; }
+        .content-panel { position: relative; z-index: 10; }
+        .tilt-card { transition: transform .15s ease, box-shadow .3s ease; transform-style: preserve-3d; }
+        .float-particle { position: absolute; border-radius: 50%; background: #ff8fb3; opacity: .7; animation: rise linear infinite; }
+        @keyframes rise { 0%{ transform: translateY(0) translateX(0); opacity:.8;} 100%{ transform: translateY(-140px) translateX(20px); opacity:0;} }
     </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
-<body class="bg-surface font-body-md text-on-surface overflow-x-hidden selection:bg-secondary-container selection:text-primary">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-inverse-surface/70 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm dark:shadow-none">
-<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
-<span class="font-display text-headline-md font-bold text-primary">BackendDev</span>
-<div class="hidden md:flex gap-md items-center">
-<a class="font-label-md text-label-md uppercase tracking-wider text-primary relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#hero">Home</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#about">About</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#tech">Tech</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#services">Servicios</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#projects">Projects</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#training">Training</a>
-<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#contact">Contact</a>
+<body class="font-body-md text-on-surface overflow-x-hidden selection:bg-secondary-container selection:text-primary">
+<div id="bg-scene">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
 </div>
-<a href="#contact" class="bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all scale-95 active:scale-90">
-  <span class="text-on-primary">Hire Me</span>
-</a>
+<div id="cursor-glow"></div>
+<div id="scroll-progress"></div>
+<!-- TopNavBar -->
+<nav class="content-panel fixed top-0 w-full z-50 bg-white/10 dark:bg-inverse-surface/40 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+<span class="font-display text-headline-md font-bold text-[#ff6fa5]">BackendDev</span>
+<div class="hidden md:flex gap-md items-center">
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-[#ff6fa5] relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-[#ff6fa5] after:rounded-full" href="#hero">Home</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#about">About</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#tech">Tech</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#services">Servicios</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#projects">Projects</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#training">Training</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#playground">Terminal 🎮</a>
+<a class="nav-link font-label-md text-label-md uppercase tracking-wider text-white/70 hover:text-[#ff6fa5] hover:-translate-y-0.5 transition-all duration-300" href="#contact">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all scale-95 active:scale-90">Hire Me</button>
 </div>
 </nav>
 <!-- Hero Section -->
-<header class="relative pt-32 pb-xl px-gutter overflow-hidden bg-gradient-to-br from-[#fff0f6] to-surface" id="hero">
+<header class="content-panel relative pt-32 pb-xl px-gutter overflow-hidden" id="hero">
+<div id="hero-particles" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
 <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center relative z-10">
 <div class="space-y-md">
-<div class="inline-flex items-center gap-xs bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full">
+<div class="inline-flex items-center gap-xs bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full animate-bounce" style="animation-duration:2.5s;">
 <span class="material-symbols-outlined text-[18px]">waving_hand</span>
 <span class="font-label-md text-label-md uppercase">¡Hola Mundo!</span>
 </div>
-<h1 class="font-display text-display-mobile md:text-display text-on-background">
+<h1 class="font-display text-display-mobile md:text-display text-white">
                     Katherine <span class="text-gradient">Zapata</span>
 </h1>
-<h2 class="font-headline-md text-headline-md text-secondary">
-                    Backend Developer Junior
+<h2 class="font-headline-md text-headline-md text-[#ff8fb3] min-h-[2em]">
+                    <span id="role-text">Backend Developer Junior</span><span class="animate-pulse">|</span>
                 </h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+<p class="font-body-lg text-body-lg text-white/80 max-w-lg">
                     Desarrolladora enfocada en backend, con especial interés en Java, Spring Boot y bases de datos. Creo soluciones claras, mantenibles y orientadas a resolver problemas reales.
                 </p>
 
 <!--  -->
-<p class="text-on-surface-variant text-label-md uppercase tracking-wider pt-sm">Disponible para oportunidades como desarrolladora backend junior, proyectos de software y equipos donde pueda aportar, aprender y seguir creciendo profesionalmente.</p>
+<p class="text-white/60 text-label-md uppercase tracking-wider pt-sm">Disponible para oportunidades como desarrolladora backend junior, proyectos de software y equipos donde pueda aportar, aprender y seguir creciendo profesionalmente.</p>
 </div>
 <div class="relative group transition-all duration-700 opacity-100 translate-y-0">
 <div class="absolute -inset-4 bg-primary/10 rounded-[48px] blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
@@ -164,307 +201,340 @@
 </div>
 </header>
 <!-- About Me Section -->
-<section class="py-xl px-gutter bg-surface transition-all duration-700 opacity-100 translate-y-0" id="about">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="about">
 <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
 <div class="order-2 lg:order-1">
-<img alt="Katherine Zapata" class="w-full h-auto max-w-md mx-auto lg:mx-0 rounded-[48px] shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVliQi13zUBSHEi1nSSXcyqWWj9aGk5A9pENaxZdR1rOoLUlluAYx0r3a5QQ7sam_CQuiFJ7WxK92UrNBUpQp_fE8u1W7l90xYQQzdHSCZF5zhEYCVE3YQmvu-qc-R4dSOzHSe7Dp5mOW-ar9NSO6zjZJAy8qzmqFGgTWhg04QQhISAZ_NbJO-1NAHZI1BCPnPFw_mSmBxy5UGCSaI6kOb_4tkMLJUUkd5N84XWLwyVf-u0lDEho8fpqH0jpL9mpCaB0YR6XxMC3Y">
+<img alt="Katherine Zapata" class="tilt-card w-full h-auto max-w-md mx-auto lg:mx-0 rounded-[48px] shadow-2xl ring-4 ring-[#ff6fa5]/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVliQi13zUBSHEi1nSSXcyqWWj9aGk5A9pENaxZdR1rOoLUlluAYx0r3a5QQ7sam_CQuiFJ7WxK92UrNBUpQp_fE8u1W7l90xYQQzdHSCZF5zhEYCVE3YQmvu-qc-R4dSOzHSe7Dp5mOW-ar9NSO6zjZJAy8qzmqFGgTWhg04QQhISAZ_NbJO-1NAHZI1BCPnPFw_mSmBxy5UGCSaI6kOb_4tkMLJUUkd5N84XWLwyVf-u0lDEho8fpqH0jpL9mpCaB0YR6XxMC3Y">
 </div>
 <div class="order-1 lg:order-2 space-y-md">
-<h3 class="font-display text-headline-lg text-on-background inline-block border-b-4 border-primary/20 pb-xs">Sobre Mí</h3>
-<div class="space-y-md font-body-md text-body-md text-on-surface-variant">
+<h3 class="font-display text-headline-lg text-white inline-block border-b-4 border-[#ff6fa5]/40 pb-xs">Sobre Mí</h3>
+<div class="space-y-md font-body-md text-body-md text-white/75">
 <p class="">
-                        ¡Hola! Soy Katherine, <strong>Backend Developer Junior</strong>. Mi enfoque está en el desarrollo backend, donde me interesa construir APIs, trabajar con bases de datos y entender cómo funcionan los sistemas desde su núcleo.
+                        ¡Hola! Soy Katherine, <strong class="text-white">Backend Developer Junior</strong>. Mi enfoque está en el desarrollo backend, donde me interesa construir APIs, trabajar con bases de datos y entender cómo funcionan los sistemas desde su núcleo.
                     </p>
 <p class="">
-                        Trabajo principalmente con <strong>Java</strong> y <strong>Spring Boot</strong>, junto con bases de datos relacionales como <strong>MySQL</strong> y <strong>PostgreSQL</strong>. También manejo Git, GitHub, HTML, CSS y JavaScript para complementar el desarrollo de soluciones web.
+                        Trabajo principalmente con <strong class="text-white">Java</strong> y <strong class="text-white">Spring Boot</strong>, junto con bases de datos relacionales como <strong class="text-white">MySQL</strong> y <strong class="text-white">PostgreSQL</strong>. También manejo Git, GitHub, HTML, CSS y JavaScript para complementar el desarrollo de soluciones web.
                     </p>
 <p class="">
                         Me caracterizo por la curiosidad, la disciplina y el enfoque en resolver problemas. Busco escribir código limpio, aprender buenas prácticas y convertir necesidades concretas en soluciones digitales funcionales.
                     </p>
 </div>
 <div class="grid grid-cols-2 gap-md pt-base">
-<div class="p-md bg-surface-container rounded-xl">
-<span class="block text-primary font-bold text-headline-md">100%</span>
-<span class="text-label-md uppercase opacity-70">Compromiso</span>
+<div class="tilt-card p-md bg-white/10 backdrop-blur-md border border-white/10 rounded-xl text-center hover:bg-white/15">
+<span class="counter block text-[#ff6fa5] font-bold text-headline-md" data-target="100">0</span><span class="text-[#ff6fa5] font-bold text-headline-md">%</span>
+<span class="text-label-md uppercase opacity-70 text-white/70">Compromiso</span>
 </div>
-<div class="p-md bg-surface-container rounded-xl">
-<span class="block text-primary font-bold text-headline-md">Learning</span>
-<span class="text-label-md uppercase opacity-70">Focus</span>
+<div class="tilt-card p-md bg-white/10 backdrop-blur-md border border-white/10 rounded-xl text-center hover:bg-white/15">
+<span class="block text-[#ff6fa5] font-bold text-headline-md">Learning</span>
+<span class="text-label-md uppercase opacity-70 text-white/70">Focus</span>
 </div>
 </div>
 </div>
 </div>
 <!--  -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-md mt-xl">
-<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
-<span class="material-symbols-outlined text-primary text-[32px]">flag</span>
-<h4 class="font-headline-md text-on-background mt-sm">Misión</h4>
-<p class="text-on-surface-variant mt-xs text-body-md">Construyo soluciones backend que convierten necesidades reales en sistemas funcionales, organizados y mantenibles.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-2xl p-md shadow-sm border border-white/10 text-center hover:bg-white/15">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">flag</span>
+<h4 class="font-headline-md text-white mt-sm">Misión</h4>
+<p class="text-white/70 mt-xs text-body-md">Construyo soluciones backend que convierten necesidades reales en sistemas funcionales, organizados y mantenibles.</p>
 </div>
-<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
-<span class="material-symbols-outlined text-primary text-[32px]">visibility</span>
-<h4 class="font-headline-md text-on-background mt-sm">Visión</h4>
-<p class="text-on-surface-variant mt-xs text-body-md">Consolidarme como desarrolladora backend, profundizar en arquitectura de software, APIs, bases de datos y despliegue de aplicaciones, y participar en proyectos de mayor impacto.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-2xl p-md shadow-sm border border-white/10 text-center hover:bg-white/15">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">visibility</span>
+<h4 class="font-headline-md text-white mt-sm">Visión</h4>
+<p class="text-white/70 mt-xs text-body-md">Consolidarme como desarrolladora backend, profundizar en arquitectura de software, APIs, bases de datos y despliegue de aplicaciones, y participar en proyectos de mayor impacto.</p>
 </div>
-<div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10 text-center">
-<span class="material-symbols-outlined text-primary text-[32px]">favorite</span>
-<h4 class="font-headline-md text-on-background mt-sm">Valores</h4>
-<p class="text-on-surface-variant mt-xs text-body-md">Responsabilidad, aprendizaje continuo y trabajo en equipo.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-2xl p-md shadow-sm border border-white/10 text-center hover:bg-white/15">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">favorite</span>
+<h4 class="font-headline-md text-white mt-sm">Valores</h4>
+<p class="text-white/70 mt-xs text-body-md">Responsabilidad, aprendizaje continuo y trabajo en equipo.</p>
 </div>
 </div>
 </section>
 <!-- Technologies Section -->
-<section class="py-xl px-gutter bg-surface-container-low transition-all duration-700 opacity-100 translate-y-0" id="tech">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="tech">
   <div class="max-w-container-max mx-auto text-center mb-xl">
-    <h3 class="font-display text-headline-lg text-on-background mb-base">Mi Stack Tecnológico</h3>
-    <p class="text-on-surface-variant max-w-2xl mx-auto">Tecnologías y herramientas que utilizo para desarrollar soluciones backend y aplicaciones web.</p>
+    <h3 class="font-display text-headline-lg text-white mb-base">Mi Stack Tecnológico</h3>
+    <p class="text-white/70 max-w-2xl mx-auto">Tecnologías y herramientas que utilizo para desarrollar soluciones backend y aplicaciones web.</p>
   </div>
 
   <div class="max-w-container-max mx-auto space-y-xl">
     <div>
-      <h4 class="font-headline-md text-on-background mb-md">Lenguajes de Programación & Backend</h4>
+      <h4 class="font-headline-md text-white mb-md">Lenguajes de Programación & Backend</h4>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">coffee</span><h4 class="font-headline-md text-body-lg mt-sm">Java</h4><p class="text-label-md text-on-surface-variant uppercase">Lenguaje Core</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">bolt</span><h4 class="font-headline-md text-body-lg mt-sm">Spring Boot</h4><p class="text-label-md text-on-surface-variant uppercase">Framework</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm">PostgreSQL</h4><p class="text-label-md text-on-surface-variant uppercase">Base de Datos</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm">MySQL</h4><p class="text-label-md text-on-surface-variant uppercase">Base de Datos</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">JavaScript</h4><p class="text-label-md text-on-surface-variant uppercase">ES6+</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">Python</h4><p class="text-label-md text-on-surface-variant uppercase">Lenguaje</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm">n8n</h4><p class="text-label-md text-on-surface-variant uppercase">Automatización</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">coffee</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Java</h4><p class="text-label-md text-white/60 uppercase">Lenguaje Core</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">bolt</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Spring Boot</h4><p class="text-label-md text-white/60 uppercase">Framework</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm text-white">PostgreSQL</h4><p class="text-label-md text-white/60 uppercase">Base de Datos</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">database</span><h4 class="font-headline-md text-body-lg mt-sm text-white">MySQL</h4><p class="text-label-md text-white/60 uppercase">Base de Datos</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm text-white">JavaScript</h4><p class="text-label-md text-white/60 uppercase">ES6+</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Python</h4><p class="text-label-md text-white/60 uppercase">Lenguaje</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm text-white">n8n</h4><p class="text-label-md text-white/60 uppercase">Automatización</p></div>
       </div>
     </div>
 
     <div>
-      <h4 class="font-headline-md text-on-background mb-md">Desarrollo Web & Frontend</h4>
+      <h4 class="font-headline-md text-white mb-md">Desarrollo Web & Frontend</h4>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">html</span><h4 class="font-headline-md text-body-lg mt-sm">HTML5</h4><p class="text-label-md text-on-surface-variant uppercase">Web</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">css</span><h4 class="font-headline-md text-body-lg mt-sm">CSS3</h4><p class="text-label-md text-on-surface-variant uppercase">Web</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm">Git</h4><p class="text-label-md text-on-surface-variant uppercase">Control de Versiones</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">GitHub</h4><p class="text-label-md text-on-surface-variant uppercase">Repositorios</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">html</span><h4 class="font-headline-md text-body-lg mt-sm text-white">HTML5</h4><p class="text-label-md text-white/60 uppercase">Web</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">css</span><h4 class="font-headline-md text-body-lg mt-sm text-white">CSS3</h4><p class="text-label-md text-white/60 uppercase">Web</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">account_tree</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Git</h4><p class="text-label-md text-white/60 uppercase">Control de Versiones</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm text-white">GitHub</h4><p class="text-label-md text-white/60 uppercase">Repositorios</p></div>
       </div>
     </div>
 
     <div>
-      <h4 class="font-headline-md text-on-background mb-md">Cloud, DevOps & Hosting</h4>
+      <h4 class="font-headline-md text-white mb-md">Cloud, DevOps & Hosting</h4>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">view_in_ar</span><h4 class="font-headline-md text-body-lg mt-sm">Docker</h4><p class="text-label-md text-on-surface-variant uppercase">Contenedores</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">terminal</span><h4 class="font-headline-md text-body-lg mt-sm">Linux</h4><p class="text-label-md text-on-surface-variant uppercase">Sistema Operativo</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">view_in_ar</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Docker</h4><p class="text-label-md text-white/60 uppercase">Contenedores</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">terminal</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Linux</h4><p class="text-label-md text-white/60 uppercase">Sistema Operativo</p></div>
       </div>
     </div>
 
     <div>
-      <h4 class="font-headline-md text-on-background mb-md">Entornos & Herramientas</h4>
+      <h4 class="font-headline-md text-white mb-md">Entornos & Herramientas</h4>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm">Visual Studio Code</h4><p class="text-label-md text-on-surface-variant uppercase">Editor</p></div>
-        <div class="bg-white p-md rounded-[24px] shadow-sm border border-outline-variant/30 text-center"><span class="material-symbols-outlined text-primary text-[32px]">auto_awesome</span><h4 class="font-headline-md text-body-lg mt-sm">IA</h4><p class="text-label-md text-on-surface-variant uppercase">Herramientas de IA</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">code</span><h4 class="font-headline-md text-body-lg mt-sm text-white">Visual Studio Code</h4><p class="text-label-md text-white/60 uppercase">Editor</p></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md p-md rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1"><span class="material-symbols-outlined text-[#ff6fa5] text-[32px]">auto_awesome</span><h4 class="font-headline-md text-body-lg mt-sm text-white">IA</h4><p class="text-label-md text-white/60 uppercase">Herramientas de IA</p></div>
       </div>
     </div>
   </div>
 </section>
 <!-- Services Section -->
 <!--  -->
-<section class="py-xl px-gutter bg-surface-container-low transition-all duration-700 opacity-100 translate-y-0" id="services">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="services">
 <div class="max-w-container-max mx-auto text-center mb-xl">
-<h3 class="font-display text-headline-lg text-on-background mb-base">Servicios de Desarrollo Backend</h3>
-<p class="text-on-surface-variant max-w-2xl mx-auto">Desarrollo soluciones enfocadas en backend, APIs, datos y automatización de procesos.</p>
+<h3 class="font-display text-headline-lg text-white mb-base">Servicios de Desarrollo Backend</h3>
+<p class="text-white/70 max-w-2xl mx-auto">Desarrollo soluciones enfocadas en backend, APIs, datos y automatización de procesos.</p>
 </div>
 <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-md">
-<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
-<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">dns</span>
-<h4 class="font-headline-md text-body-lg mb-xs">Desarrollo de APIs REST</h4>
-<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md p-lg rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px] mb-sm block">dns</span>
+<h4 class="font-headline-md text-body-lg mb-xs text-white">Desarrollo de APIs REST</h4>
+<p class="text-body-md text-white/70">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
 </div>
-<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
-<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">integration_instructions</span>
-<h4 class="font-headline-md text-body-lg mb-xs">Bases de Datos</h4>
-<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md p-lg rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px] mb-sm block">integration_instructions</span>
+<h4 class="font-headline-md text-body-lg mb-xs text-white">Bases de Datos</h4>
+<p class="text-body-md text-white/70">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
 </div>
-<div class="bg-white p-lg rounded-[24px] shadow-sm border border-outline-variant/30 text-center">
-<span class="material-symbols-outlined text-primary text-[32px] mb-sm block">support_agent</span>
-<h4 class="font-headline-md text-body-lg mb-xs">Integración y Automatización</h4>
-<p class="text-body-md text-on-surface-variant">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
+<div class="tilt-card bg-white/10 backdrop-blur-md p-lg rounded-[24px] shadow-sm border border-white/10 text-center hover:bg-white/20 hover:-translate-y-1">
+<span class="material-symbols-outlined text-[#ff6fa5] text-[32px] mb-sm block">support_agent</span>
+<h4 class="font-headline-md text-body-lg mb-xs text-white">Integración y Automatización</h4>
+<p class="text-body-md text-white/70">Soluciones pensadas para aplicaciones que necesitan una base técnica clara, funcional y mantenible.</p>
 </div>
 </div>
 </section>
 <!-- Projects Section -->
-<section class="py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="projects">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="projects">
 <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-end gap-md mb-xl">
 <div class="max-w-xl">
-<h3 class="font-display text-headline-lg text-on-background mb-base">Proyectos Destacados</h3>
-<p class="text-on-surface-variant">Una muestra de proyectos de desarrollo web y backend que reflejan mi forma de resolver problemas y construir soluciones.</p>
+<h3 class="font-display text-headline-lg text-white mb-base">Proyectos Destacados</h3>
+<p class="text-white/70">Una muestra de proyectos de desarrollo web y backend que reflejan mi forma de resolver problemas y construir soluciones.</p>
 </div>
-<img alt="Terminal Icon" class="w-24 h-24 hidden md:block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmAIMauUgmESPo0t33FPkg9nx4fUqR3VIG2kax_ydKlevcRWpUx8fNuO4tWk3F8P4JUlzTwdfz5RvYZLpyiSo5o9_Pch6zL0cDyaPJaztWIqnxbs4DhorhoFP8dCHbE_V39aLSv2gFFmvBWCkkobK2sW59r9oHHnzpM13NYf12pf4zXfsqNnbpM8fWkChAkDXk3pTjeU4My9z59ZMmfpkYxhPzc_AhL3yuIb-o38kqa7Is7fZuFxc7Q-MI-dy5oilmV-OHSAN1RaI">
+<span class="material-symbols-outlined hidden md:flex items-center justify-center w-24 h-24 rounded-[24px] bg-white/10 text-[#ff6fa5] text-[56px] border border-white/10">terminal</span>
 </div>
 <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
 <!-- Project Card 1 -->
-<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
-<div class="relative h-56 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A minimalist and high-end representation of a digital library management system. The interface is clean, showing stylized book icons and search bars in a soft pink and white color scheme. The aesthetic is modern and organized, reflecting software architecture excellence for a backend portfolio." src="https://images.unsplash.com/photo-1547822424-0a6db5e8f500?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2l1ZGFkJTIwcm9zYXxlbnwwfHwwfHx8MA%3D%3D">
-<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#ff2d78]/20 transition-all duration-500 border border-white/10 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden bg-gradient-to-br from-[#ff2d78] via-[#b50a53] to-[#3b0a2a] flex items-center justify-center">
+<div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px); background-size: 18px 18px;"></div>
+<span class="material-symbols-outlined text-white/90 text-[72px] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-700 drop-shadow-lg">location_city</span>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
 <span class="text-white font-label-md uppercase tracking-wider">n8n • IA</span>
 </div>
 </div>
 <div class="p-md flex-1 flex flex-col">
-<h4 class="font-headline-md text-on-background mb-sm">SmartCity-Fix</h4>
-<p class="text-body-md text-on-surface-variant mb-md flex-1">
+<h4 class="font-headline-md text-white mb-sm">SmartCity-Fix</h4>
+<p class="text-body-md text-white/70 mb-md flex-1">
                         Plataforma inteligente para que los ciudadanos reporten daños urbanos y consulten el estado de sus tickets en tiempo real.
                     </p>
 <!--  -->
-<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<p class="text-label-md text-white/60 mb-md"><strong class="text-white">Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong class="text-white">Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
 <div class="flex gap-sm">
-<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/Proyecto_Smartcityfix_D2.git">GitHub</a>
+<a class="flex-1 text-center py-xs bg-white/10 text-[#ff8fb3] rounded-full font-label-md hover:bg-[#ff2d78] hover:text-white transition-all" href="https://github.com/lissethkatherine/Proyecto_Smartcityfix_D2.git">GitHub</a>
 </div>
 </div>
 </div>
 <!-- Project Card 2 -->
-<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
-<div class="relative h-56 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A stylized 3D icon of a dumbbell and a digital heart rate monitor integrated into a clean, pink-toned dashboard. This represents a gym management system UI, focused on cleanliness, professional structure, and high-quality digital design for a backend development student portfolio." src="https://thumbs.dreamstime.com/b/reproductor-de-vinilo-rosa-pastel-con-lp-359346127.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#ff2d78]/20 transition-all duration-500 border border-white/10 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden bg-gradient-to-br from-[#7c3aed] via-[#4c1d95] to-[#1e0a3c] flex items-center justify-center">
+<div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px); background-size: 18px 18px;"></div>
+<span class="material-symbols-outlined text-white/90 text-[72px] group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-700 drop-shadow-lg">library_music</span>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
 <span class="text-white font-label-md uppercase tracking-wider">HTML • CSS</span>
 </div>
 </div>
 <div class="p-md flex-1 flex flex-col">
-<h4 class="font-headline-md text-on-background mb-sm"> MusicStream </h4>
-<p class="text-body-md text-on-surface-variant mb-md flex-1">
+<h4 class="font-headline-md text-white mb-sm"> MusicStream </h4>
+<p class="text-body-md text-white/70 mb-md flex-1">
                         Maquetación de una tienda de música y reproductor web hecho con HTML y CSS. Es solo la estructura visual de la página, sin funcionalidad real.
                     </p>
 <!--  -->
-<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<p class="text-label-md text-white/60 mb-md"><strong class="text-white">Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong class="text-white">Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
 <div class="flex gap-sm">
-<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/MusicStream_App.git">GitHub</a>
+<a class="flex-1 text-center py-xs bg-white/10 text-[#ff8fb3] rounded-full font-label-md hover:bg-[#ff2d78] hover:text-white transition-all" href="https://github.com/lissethkatherine/MusicStream_App.git">GitHub</a>
 </div>
 </div>
 </div>
 <!-- Project Card 3 -->
-<div class="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-outline-variant/20 flex flex-col group duration-700 opacity-100 translate-y-0">
-<div class="relative h-56 overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A premium glassmorphism card layout showing task management components, progress bars, and team collaboration avatars. Soft pink accents, elegant typography, and a professional workspace vibe, representing a project management system for a software developer portfolio." src="https://st5.depositphotos.com/12439124/76031/i/450/depositphotos_760316376-stock-photo-desk-calendar-october-2025-pink.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
+<div class="tilt-card bg-white/10 backdrop-blur-md rounded-[24px] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#ff2d78]/20 transition-all duration-500 border border-white/10 flex flex-col group duration-700 opacity-100 translate-y-0">
+<div class="relative h-56 overflow-hidden bg-gradient-to-br from-[#22d3ee] via-[#0e7490] to-[#0a2540] flex items-center justify-center">
+<div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px); background-size: 18px 18px;"></div>
+<span class="material-symbols-outlined text-white/90 text-[72px] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-700 drop-shadow-lg">savings</span>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-md">
 <span class="text-white font-label-md uppercase tracking-wider">HTML • CSS</span>
 </div>
 </div>
 <div class="p-md flex-1 flex flex-col">
-<h4 class="font-headline-md text-on-background mb-sm">Mi Calendario de Ahorros Inteligente</h4>
-<p class="text-body-md text-on-surface-variant mb-md flex-1">
+<h4 class="font-headline-md text-white mb-sm">Mi Calendario de Ahorros Inteligente</h4>
+<p class="text-body-md text-white/70 mb-md flex-1">
                         Diseño de un calendario de ahorro digital, virtual y editable que refleje una meta financiera personal a un año.
                     </p>
 <!--  -->
-<p class="text-label-md text-on-surface-variant mb-md"><strong>Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong>Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
+<p class="text-label-md text-white/60 mb-md"><strong class="text-white">Mi rol:</strong> Desarrollo de la lógica de reportes y seguimiento de tickets.<br><strong class="text-white">Resultado:</strong> Plataforma orientada a registrar daños urbanos y consultar el estado de los reportes.</p>
 <div class="flex gap-sm">
-<a class="flex-1 text-center py-xs bg-primary/10 text-primary rounded-full font-label-md hover:bg-primary hover:text-white transition-all" href="https://github.com/lissethkatherine/Mi-Calendario-de-Ahorros-Inteligente.git" target="_blank">GitHub</a>
+<a class="flex-1 text-center py-xs bg-white/10 text-[#ff8fb3] rounded-full font-label-md hover:bg-[#ff2d78] hover:text-white transition-all" href="https://github.com/lissethkatherine/Mi-Calendario-de-Ahorros-Inteligente.git" target="_blank">GitHub</a>
 </div>
 </div>
 </div>
 </div>
 </section>
 <!-- Training Section -->
-<section class="py-xl px-gutter bg-white transition-all duration-700 opacity-100 translate-y-0" id="training">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="training">
   <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-xl">
     <div class="lg:col-span-4">
-      <h3 class="font-display text-headline-lg text-on-background mb-md">Formación</h3>
-      <p class="text-on-surface-variant">Formación académica y técnica que respalda mi perfil como desarrolladora junior.</p>
-      <div class="mt-lg p-md border-l-4 border-primary bg-surface-container-low rounded-r-xl">
-        <p class="font-label-md text-primary uppercase">Perfil Profesional</p>
-        <p class="font-body-md">Desarrolladora Junior Full Stack</p>
+      <h3 class="font-display text-headline-lg text-white mb-md">Formación</h3>
+      <p class="text-white/70">Formación académica y técnica que respalda mi perfil como desarrolladora junior.</p>
+      <div class="mt-lg p-md border-l-4 border-[#ff6fa5] bg-white/10 backdrop-blur-md rounded-r-xl">
+        <p class="font-label-md text-[#ff6fa5] uppercase">Perfil Profesional</p>
+        <p class="font-body-md text-white">Desarrolladora Junior Full Stack</p>
       </div>
     </div>
 
     <div class="lg:col-span-8 space-y-md">
-      <div class="relative pl-md border-l-2 border-outline-variant/50 pb-md">
-        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-primary"></div>
-        <div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10">
-          <span class="text-primary font-bold text-label-md">Formación académica</span>
-          <h4 class="font-headline-md text-on-background mt-xs">Bachiller</h4>
-          <p class="text-on-surface-variant mt-sm">Formación media</p>
+      <div class="relative pl-md border-l-2 border-white/20 pb-md">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#ff6fa5] border-2 border-white/40 animate-pulse"></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md rounded-2xl p-md shadow-sm border border-white/10 hover:bg-white/15">
+          <span class="text-[#ff6fa5] font-bold text-label-md">Formación académica</span>
+          <h4 class="font-headline-md text-white mt-xs">Bachiller</h4>
+          <p class="text-white/70 mt-sm">Formación media</p>
         </div>
       </div>
 
-      <div class="relative pl-md border-l-2 border-outline-variant/50">
-        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-primary"></div>
-        <div class="bg-surface rounded-2xl p-md shadow-sm border border-outline-variant/10">
-          <span class="text-primary font-bold text-label-md">Formación técnica</span>
-          <h4 class="font-headline-md text-on-background mt-xs">Técnico en Desarrollo de Software</h4>
-          <p class="text-on-surface-variant mt-sm">Campuslands · Floridablanca</p>
+      <div class="relative pl-md border-l-2 border-white/20">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#ff6fa5] border-2 border-white/40 animate-pulse"></div>
+        <div class="tilt-card bg-white/10 backdrop-blur-md rounded-2xl p-md shadow-sm border border-white/10 hover:bg-white/15">
+          <span class="text-[#ff6fa5] font-bold text-label-md">Formación técnica</span>
+          <h4 class="font-headline-md text-white mt-xs">Técnico en Desarrollo de Software</h4>
+          <p class="text-white/70 mt-sm">Campuslands · Floridablanca</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+<!-- Playground / Terminal Section -->
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="playground">
+<div class="max-w-container-max mx-auto text-center mb-lg">
+<h3 class="font-display text-headline-lg text-white mb-base">Terminal Interactiva <span class="inline-block animate-bounce">🎮</span></h3>
+<p class="text-white/70 max-w-2xl mx-auto">No solo me leas, <span class="text-[#ff6fa5]">ejecútame</span>. Escribe <code class="text-[#39ff14] bg-black/40 px-1 rounded">help</code> para empezar, o <code class="text-[#39ff14] bg-black/40 px-1 rounded">jugar</code> para el mini-juego.</p>
+</div>
+<div class="max-w-3xl mx-auto tilt-card">
+<div id="terminal" class="bg-black/80 backdrop-blur-md rounded-2xl border border-[#39ff14]/30 shadow-2xl shadow-[#39ff14]/10 overflow-hidden" onclick="document.getElementById('terminal-input').focus()">
+<div class="flex items-center gap-2 px-md py-sm bg-white/5 border-b border-white/10">
+<span class="w-3 h-3 rounded-full bg-[#ff5f57]"></span>
+<span class="w-3 h-3 rounded-full bg-[#febc2e]"></span>
+<span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+<span class="ml-md text-white/40 text-label-md font-mono">katherine@backend:~</span>
+</div>
+<div id="terminal-output" class="p-md h-72 overflow-y-auto font-mono text-sm text-[#39ff14] space-y-1"></div>
+<div id="game-area" class="relative hidden h-72 overflow-hidden border-t border-white/10 bg-black/60"></div>
+<div class="flex items-center gap-2 px-md py-sm border-t border-white/10">
+<span class="text-[#ff6fa5] font-mono">➜</span>
+<input autocomplete="off" class="flex-1 bg-transparent outline-none text-white font-mono text-sm placeholder-white/30" id="terminal-input" placeholder="escribe 'help' y presiona Enter..." type="text">
+</div>
+</div>
+<div class="flex flex-wrap gap-sm justify-center mt-md">
+<button class="term-quick px-sm py-xs rounded-full bg-white/10 text-white/70 text-label-md font-mono hover:bg-[#ff6fa5]/30 hover:text-white transition-all" data-cmd="help">help</button>
+<button class="term-quick px-sm py-xs rounded-full bg-white/10 text-white/70 text-label-md font-mono hover:bg-[#ff6fa5]/30 hover:text-white transition-all" data-cmd="skills">skills</button>
+<button class="term-quick px-sm py-xs rounded-full bg-white/10 text-white/70 text-label-md font-mono hover:bg-[#ff6fa5]/30 hover:text-white transition-all" data-cmd="jugar">jugar 🐛</button>
+<button class="term-quick px-sm py-xs rounded-full bg-white/10 text-white/70 text-label-md font-mono hover:bg-[#ff6fa5]/30 hover:text-white transition-all" data-cmd="matrix">matrix</button>
+<button class="term-quick px-sm py-xs rounded-full bg-white/10 text-white/70 text-label-md font-mono hover:bg-[#ff6fa5]/30 hover:text-white transition-all" data-cmd="sudo hire-me">sudo hire-me</button>
+</div>
+</div>
+</section>
 <!-- Contact Section -->
-<section class="py-xl px-gutter bg-surface-container-highest transition-all duration-700 opacity-100 translate-y-0" id="contact">
+<section class="content-panel py-xl px-gutter transition-all duration-700 opacity-100 translate-y-0" id="contact">
 <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl">
 <div class="space-y-md">
-<h3 class="font-display text-headline-lg text-on-background">¿Trabajamos Juntos? :)</h3>
-<p class="text-on-surface-variant body-lg">Estoy disponible para oportunidades como desarrolladora backend junior, proyectos freelance y colaboración en soluciones de software.</p>
+<h3 class="font-display text-headline-lg text-white">¿Trabajamos Juntos? :)</h3>
+<p class="text-white/70 body-lg">Estoy disponible para oportunidades como desarrolladora backend junior, proyectos freelance y colaboración en soluciones de software.</p>
 <div class="space-y-sm pt-md">
-<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
-<span class="material-symbols-outlined text-primary">mail</span>
+<div class="tilt-card flex items-center gap-md p-md bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/10 hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-[#ff6fa5]">mail</span>
 <div>
-<p class="text-label-md uppercase opacity-50">Email</p>
-<p class="font-body-md">katherinecano020@gmail.com</p>
+<p class="text-label-md uppercase opacity-50 text-white/60">Email</p>
+<p class="font-body-md text-white">katherinecano020@gmail.com</p>
 </div>
 </div>
-<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
-<span class="material-symbols-outlined text-primary">link</span>
+<div class="tilt-card flex items-center gap-md p-md bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/10 hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-[#ff6fa5]">link</span>
 <div>
-<p class="text-label-md uppercase opacity-50">LinkedIn</p>
-<p class="font-body-md">http://www.linkedin.com/in/lissethkatherine</p>
+<p class="text-label-md uppercase opacity-50 text-white/60">LinkedIn</p>
+<p class="font-body-md text-white">http://www.linkedin.com/in/lissethkatherine</p>
 </div>
 </div>
-<div class="flex items-center gap-md p-md bg-white rounded-2xl shadow-sm">
-<span class="material-symbols-outlined text-primary">code</span>
+<div class="tilt-card flex items-center gap-md p-md bg-white/10 backdrop-blur-md rounded-2xl shadow-sm border border-white/10 hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-[#ff6fa5]">code</span>
 <div>
-<p class="text-label-md uppercase opacity-50">GitHub</p>
-<p class="font-body-md">https://github.com/lissethkatherine</p>
+<p class="text-label-md uppercase opacity-50 text-white/60">GitHub</p>
+<p class="font-body-md text-white">https://github.com/lissethkatherine</p>
 </div>
 </div>
 </div>
 <div class="pt-md">
 <!--  -->
-<a class="inline-flex items-center gap-xs bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all" href="https://drive.google.com/file/d/1yS6VLzMpAamMwcZz9QcGwuzEBIvJxzUH/view?usp=sharing" target="_blank">
-  <span class="material-symbols-outlined text-[18px]">download</span> Consultar CV
-</a>
+<a class="inline-flex items-center gap-xs bg-primary text-on-primary px-md py-sm rounded-full font-label-md uppercase tracking-wider hover:bg-primary-container transition-all" href="#" download="">
+<span class="material-symbols-outlined text-[18px]">download</span> Descargar CV
+                    </a>
 </div>
 </div>
-<div class="glass-card rounded-[32px] p-lg shadow-xl border border-white/50">
+<div class="bg-white/10 backdrop-blur-xl rounded-[32px] p-lg shadow-2xl border border-white/20">
 <form id="contact-form" class="space-y-md">
 <div>
-<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Nombre Completo</label>
-<input class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="Tu nombre..." type="text" name="name">
+<label class="block font-label-md text-white/70 uppercase mb-xs">Nombre Completo</label>
+<input class="w-full bg-white/10 text-white placeholder-white/40 border border-white/10 rounded-xl p-md focus:ring-2 focus:ring-[#ff6fa5] focus:bg-white/20 transition-all" placeholder="Tu nombre..." type="text" name="name">
 </div>
 <div>
-<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Correo Electrónico</label>
-<input class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="correo@ejemplo.com" type="email" name="email">
+<label class="block font-label-md text-white/70 uppercase mb-xs">Correo Electrónico</label>
+<input class="w-full bg-white/10 text-white placeholder-white/40 border border-white/10 rounded-xl p-md focus:ring-2 focus:ring-[#ff6fa5] focus:bg-white/20 transition-all" placeholder="correo@ejemplo.com" type="email" name="email">
 </div>
 <div>
-<label class="block font-label-md text-on-surface-variant uppercase mb-xs">Mensaje</label>
-<textarea class="w-full bg-surface/50 border-none rounded-xl p-md focus:ring-2 focus:ring-primary transition-all" placeholder="Cuéntame sobre tu proyecto..." rows="4" name="message"></textarea>
+<label class="block font-label-md text-white/70 uppercase mb-xs">Mensaje</label>
+<textarea class="w-full bg-white/10 text-white placeholder-white/40 border border-white/10 rounded-xl p-md focus:ring-2 focus:ring-[#ff6fa5] focus:bg-white/20 transition-all" placeholder="Cuéntame sobre tu proyecto..." rows="4" name="message"></textarea>
 </div>
-<button class="w-full bg-primary text-on-primary py-md rounded-xl font-label-md uppercase tracking-widest hover:bg-primary-container transition-all" type="submit">Enviar Mensaje</button>
+<button class="w-full bg-gradient-to-r from-[#ff2d78] to-[#7c3aed] text-white py-md rounded-xl font-label-md uppercase tracking-widest hover:brightness-110 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#ff2d78]/30" type="submit">Enviar Mensaje</button>
 </form>
 </div>
 </div>
 </section>
 <!-- Footer -->
-<footer class="w-full py-lg bg-surface dark:bg-on-background border-t border-outline-variant/30">
+<footer class="content-panel w-full py-lg border-t border-white/10">
 <div class="flex flex-col items-center gap-base max-w-container-max mx-auto">
-<span class="font-display text-headline-sm text-primary">BackendDev</span>
+<span class="font-display text-headline-sm text-[#ff6fa5]">BackendDev</span>
 <div class="flex gap-md mb-md">
-<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<a class="text-white/60 hover:text-[#ff6fa5] transition-all hover:-translate-y-1 hover:scale-125" href="#">
 <span class="material-symbols-outlined">code</span>
 </a>
-<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<a class="text-white/60 hover:text-[#ff6fa5] transition-all hover:-translate-y-1 hover:scale-125" href="#">
 <span class="material-symbols-outlined">share</span>
 </a>
-<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<a class="text-white/60 hover:text-[#ff6fa5] transition-all hover:-translate-y-1 hover:scale-125" href="#">
 <span class="material-symbols-outlined">terminal</span>
 </a>
-<a class="text-on-surface-variant hover:text-primary transition-all hover:-translate-y-1" href="#">
+<a class="text-white/60 hover:text-[#ff6fa5] transition-all hover:-translate-y-1 hover:scale-125" href="#">
 <span class="material-symbols-outlined">mail</span>
 </a>
 </div>
-<p class="font-body-md text-body-md text-on-surface-variant text-center px-gutter opacity-80">
+<p class="font-body-md text-body-md text-white/60 text-center px-gutter opacity-80">
                 © 2026 Backend Portfolio. Crafted with code, precision and pink pixels.
             </p>
 </div>
@@ -497,22 +567,279 @@
 
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= (sectionTop - 150)) {
                     current = section.getAttribute('id');
                 }
             });
 
             navLinks.forEach(link => {
-                link.classList.remove('text-primary');
-                link.classList.add('text-on-surface-variant');
+                link.classList.remove('text-[#ff6fa5]');
+                link.classList.add('text-white/70');
                 const href = link.getAttribute('href').substring(1);
                 if (href === current) {
-                    link.classList.add('text-primary');
-                    link.classList.remove('text-on-surface-variant');
+                    link.classList.add('text-[#ff6fa5]');
+                    link.classList.remove('text-white/70');
                 }
             });
         });
+
+        // Barra de progreso de scroll
+        const progressBar = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+            if (progressBar) progressBar.style.width = pct + '%';
+        });
+
+        // Glow que sigue el cursor
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            if (glow) { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; }
+        });
+
+        // Texto rotativo en el hero
+        const roles = ['Backend Developer Junior', 'Java & Spring Boot', 'APIs & Bases de Datos', 'Resolviendo problemas reales'];
+        let roleIndex = 0;
+        const roleEl = document.getElementById('role-text');
+        if (roleEl) {
+            setInterval(() => {
+                roleIndex = (roleIndex + 1) % roles.length;
+                roleEl.style.opacity = 0;
+                setTimeout(() => { roleEl.textContent = roles[roleIndex]; roleEl.style.opacity = 1; }, 300);
+            }, 2600);
+            roleEl.style.transition = 'opacity .3s';
+        }
+
+        // Partículas flotantes en el hero
+        const particleHost = document.getElementById('hero-particles');
+        if (particleHost) {
+            for (let i = 0; i < 22; i++) {
+                const p = document.createElement('span');
+                p.className = 'float-particle';
+                const size = 3 + Math.random() * 5;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.bottom = (Math.random() * 30) + '%';
+                p.style.animationDuration = (6 + Math.random() * 8) + 's';
+                p.style.animationDelay = (Math.random() * 8) + 's';
+                particleHost.appendChild(p);
+            }
+        }
+
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target, 10);
+                    let cur = 0;
+                    const step = Math.max(1, Math.round(target / 40));
+                    const tick = () => {
+                        cur += step;
+                        if (cur >= target) { el.textContent = target; return; }
+                        el.textContent = cur;
+                        requestAnimationFrame(tick);
+                    };
+                    tick();
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        // Efecto tilt 3D en tarjetas
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                card.style.transform = `perspective(600px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) translateY(0)'; });
+        });
+
+        // Confeti sencillo al enviar el formulario
+        function lanzarConfeti() {
+            const colors = ['#ff2d78', '#7c3aed', '#22d3ee', '#fbbf24', '#ff8fb3'];
+            for (let i = 0; i < 60; i++) {
+                const c = document.createElement('div');
+                c.style.position = 'fixed';
+                c.style.zIndex = 200;
+                c.style.width = '8px';
+                c.style.height = '8px';
+                c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.left = '50%';
+                c.style.top = '40%';
+                c.style.pointerEvents = 'none';
+                document.body.appendChild(c);
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 150 + Math.random() * 250;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist - 100;
+                c.animate([
+                    { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${dx}px, ${dy}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], { duration: 1200 + Math.random() * 600, easing: 'ease-out' }).onfinish = () => c.remove();
+            }
+        }
+        window.lanzarConfeti = lanzarConfeti;
+
+        // ===== Terminal interactiva + mini-juego =====
+        (function () {
+            const output = document.getElementById('terminal-output');
+            const input = document.getElementById('terminal-input');
+            const gameArea = document.getElementById('game-area');
+            if (!output || !input) return;
+
+            function print(html) {
+                const line = document.createElement('div');
+                line.innerHTML = html;
+                output.appendChild(line);
+                output.scrollTop = output.scrollHeight;
+            }
+            function echo(cmd) {
+                print('<span class="text-[#ff6fa5]">➜</span> <span class="text-white">' + cmd.replace(/</g,'&lt;') + '</span>');
+            }
+
+            const HELP = `Comandos disponibles:
+  <span class="text-[#ff6fa5]">help</span>        — ver esta ayuda
+  <span class="text-[#ff6fa5]">about</span>       — sobre Katherine
+  <span class="text-[#ff6fa5]">skills</span>      — stack técnico
+  <span class="text-[#ff6fa5]">projects</span>    — proyectos destacados
+  <span class="text-[#ff6fa5]">contact</span>     — datos de contacto
+  <span class="text-[#ff6fa5]">sudo hire-me</span> — contrátame ya
+  <span class="text-[#ff6fa5]">matrix</span>      — modo matrix (5s)
+  <span class="text-[#ff6fa5]">jugar</span>       — mini-juego: atrapa los bugs 🐛
+  <span class="text-[#ff6fa5]">clear</span>       — limpiar pantalla`;
+
+            const COMMANDS = {
+                help: () => HELP,
+                about: () => 'Backend Developer Junior enfocada en Java, Spring Boot y bases de datos. Curiosa, disciplinada y con ganas de seguir creciendo. 🚀',
+                skills: () => 'Java · Spring Boot · MySQL · PostgreSQL · Git/GitHub · HTML · CSS · JavaScript · Docker · Linux · n8n',
+                projects: () => 'SmartCity-Fix, MusicStream, Mi Calendario de Ahorros Inteligente — mira la sección "Projects" arriba 👆',
+                contact: () => 'katherinecano020@gmail.com · linkedin.com/in/lissethkatherine · github.com/lissethkatherine',
+                whoami: () => 'katherine-zapata (backend-developer-junior)',
+                'sudo hire-me': () => { if (window.lanzarConfeti) window.lanzarConfeti(); return '✅ Permiso concedido. Baja a la sección de Contacto para escribirme 💌'; },
+                clear: () => { output.innerHTML = ''; return null; },
+                matrix: () => { startMatrix(); return 'Activando modo matrix... 💊'; },
+                jugar: () => { startBugGame(); return 'Cargando mini-juego...'; },
+                game: () => { startBugGame(); return 'Cargando mini-juego...'; },
+            };
+
+            function run(raw) {
+                const cmd = raw.trim();
+                if (!cmd) return;
+                echo(cmd);
+                const key = cmd.toLowerCase();
+                if (COMMANDS[key]) {
+                    const res = COMMANDS[key]();
+                    if (res) print('<span class="text-white/80">' + res.replace(/\n/g,'<br>') + '</span>');
+                } else {
+                    print('<span class="text-[#ff5f57]">comando no encontrado: ' + key.replace(/</g,'&lt;') + '</span> — prueba <span class="text-[#ff6fa5]">help</span>');
+                }
+            }
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { run(input.value); input.value = ''; }
+            });
+            document.querySelectorAll('.term-quick').forEach(btn => {
+                btn.addEventListener('click', () => run(btn.dataset.cmd));
+            });
+
+            print('<span class="text-white/60">Bienvenid@ a la terminal de Katherine. Escribe <span class="text-[#ff6fa5]">help</span> para empezar.</span>');
+
+            // Mini-juego: atrapa los bugs 🐛
+            let gameTimer = null;
+            function startBugGame() {
+                gameArea.classList.remove('hidden');
+                gameArea.innerHTML = '';
+                const hud = document.createElement('div');
+                hud.className = 'absolute top-2 left-2 right-2 flex justify-between text-xs font-mono text-white/80 z-10';
+                const best = localStorage.getItem('kz_bug_highscore') || 0;
+                hud.innerHTML = '<span>🐛 Score: <span id="bug-score">0</span></span><span>⏱️ <span id="bug-time">15</span>s</span><span>🏆 Best: <span id="bug-best">' + best + '</span></span>';
+                gameArea.appendChild(hud);
+
+                let score = 0, timeLeft = 15;
+                const scoreEl = () => document.getElementById('bug-score');
+                const timeEl = () => document.getElementById('bug-time');
+
+                function spawnBug() {
+                    const bug = document.createElement('span');
+                    bug.textContent = '🐛';
+                    bug.style.position = 'absolute';
+                    bug.style.fontSize = (20 + Math.random() * 16) + 'px';
+                    bug.style.left = (5 + Math.random() * 85) + '%';
+                    bug.style.top = (15 + Math.random() * 75) + '%';
+                    bug.style.cursor = 'pointer';
+                    bug.style.userSelect = 'none';
+                    bug.style.transition = 'transform .15s';
+                    bug.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        score++;
+                        if (scoreEl()) scoreEl().textContent = score;
+                        bug.remove();
+                        spawnBug();
+                    });
+                    gameArea.appendChild(bug);
+                    setTimeout(() => { if (bug.parentNode) { bug.remove(); spawnBug(); } }, 1800 + Math.random() * 800);
+                }
+                for (let i = 0; i < 4; i++) spawnBug();
+
+                if (gameTimer) clearInterval(gameTimer);
+                gameTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeEl()) timeEl().textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(gameTimer);
+                        gameArea.querySelectorAll('span').forEach(s => { if (s !== hud) s.remove(); });
+                        const prevBest = parseInt(localStorage.getItem('kz_bug_highscore') || '0', 10);
+                        const newBest = Math.max(prevBest, score);
+                        localStorage.setItem('kz_bug_highscore', newBest);
+                        const endMsg = document.createElement('div');
+                        endMsg.className = 'absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-black/70';
+                        endMsg.innerHTML = '<p class="text-white text-lg font-bold">¡Tiempo! Atrapaste ' + score + ' bugs 🐞</p>' +
+                            (score > prevBest ? '<p class="text-[#39ff14]">¡Nuevo récord! 🏆</p>' : '<p class="text-white/60">Mejor puntaje: ' + newBest + '</p>') +
+                            '<button id="bug-replay" class="mt-2 px-md py-xs rounded-full bg-gradient-to-r from-[#ff2d78] to-[#7c3aed] text-white text-sm">Jugar de nuevo</button>' +
+                            '<button id="bug-close" class="px-md py-xs rounded-full bg-white/10 text-white/70 text-sm">Cerrar</button>';
+                        gameArea.appendChild(endMsg);
+                        if (window.lanzarConfeti && score >= 8) window.lanzarConfeti();
+                        document.getElementById('bug-replay').addEventListener('click', startBugGame);
+                        document.getElementById('bug-close').addEventListener('click', () => { gameArea.classList.add('hidden'); gameArea.innerHTML = ''; });
+                    }
+                }, 1000);
+            }
+
+            // Efecto Matrix con canvas
+            function startMatrix() {
+                const canvas = document.createElement('canvas');
+                canvas.style.position = 'fixed';
+                canvas.style.inset = '0';
+                canvas.style.zIndex = 150;
+                canvas.style.pointerEvents = 'none';
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                document.body.appendChild(canvas);
+                const ctx = canvas.getContext('2d');
+                const chars = 'アイウエオカキクケコ01スペースSPRINGJAVA';
+                const cols = Math.floor(canvas.width / 18);
+                const drops = new Array(cols).fill(0);
+                const interval = setInterval(() => {
+                    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#39ff14';
+                    ctx.font = '16px monospace';
+                    drops.forEach((y, i) => {
+                        const ch = chars[Math.floor(Math.random() * chars.length)];
+                        ctx.fillText(ch, i * 18, y);
+                        drops[i] = (y > canvas.height && Math.random() > 0.975) ? 0 : y + 18;
+                    });
+                }, 40);
+                setTimeout(() => { clearInterval(interval); canvas.remove(); }, 5000);
+            }
+        })();
     </script>
 
 
@@ -523,7 +850,7 @@
 <script>
 (function () {
   emailjs.init({
-    publicKey: "S2Q40Bz_D_OCSQ5BK"
+    publicKey: "S2Q4Bz_D_OCSQ5Bk"
   });
 
   const form = document.getElementById("contact-form");
@@ -541,11 +868,12 @@
     }
 
     emailjs.sendForm(
-      "service_p0jq0vu",
-      "template_iq47c1s",
+      "service_p0jQ0Vu",
+      "template_tyue759",
       form
     ).then(
       function () {
+        if (window.lanzarConfeti) window.lanzarConfeti();
         alert("¡Mensaje enviado correctamente!");
         form.reset();
       },
